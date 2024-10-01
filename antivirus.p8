@@ -1,8 +1,36 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
-cls()
-map(0,0)
+--variables
+
+function _init()
+  player={
+    sp=1,
+    x=8,
+    y=104,
+    w=8,
+    h=8,
+    flp=false,
+    dx=0,
+    dy=0,
+    max_dx=2,
+    max_dy=3,
+    acc=0.5,
+    boost=4,
+    anim=0,
+    running=false,
+    jumping=false,
+    falling=false,
+    sliding=false,
+    landed=false
+  }
+end
+
+function _draw()
+  cls()
+  map(0,0)
+  spr(player.sp,player.x,player.y,1,1,player.flp)
+end
 __gfx__
 00000000005555000055550000555500005555000055550000555500000000000055550000555500005555000055550000000000000000000000000000000000
 0000000005b6bb0005b6bb0005b6bb0005b6bb0005b6bb0005b6bb000055550005c6cc0005c6cc00059699000586880000000000000000000000000000000000
