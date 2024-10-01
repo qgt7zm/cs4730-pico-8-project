@@ -7,16 +7,16 @@ function _init()
   player={
     sp=1,
     x=8,
-    y=104,
-    w=8,
+    y=98,
+    w=7,
     h=8,
     flp=false,
     dx=0,
     dy=0,
     max_dx=2,
     max_dy=3,
-    acc=0.5,
-    boost=4,
+    acc=0.4,
+    boost=3.5,
     anim=0,
     running=false,
     jumping=false,
@@ -28,13 +28,12 @@ function _init()
   gravity=0.3
   friction=0.85
 end
-
--->8
 -->8
 --update
 
 function _update()
-  player.y+=gravity
+  player_update()
+  player_animate()
 end
 
 function _draw()
@@ -42,8 +41,6 @@ function _draw()
   map(0,0)
   spr(player.sp,player.x,player.y,1,1,player.flp)
 end
-
--->8
 -->8
 --collision
 
@@ -86,15 +83,132 @@ function collide_map(obj,aim,flag)
     return false
   end
 end
+-->8
+--player
+
+function player_update()
+  --physics
+  player.dy+=gravity
+  player.dx*=friction
+  
+  --run
+  if btn(⬅️) then
+    player.dx-=player.acc
+    player.running=true
+    player.flp=true
+  end
+  if btn(➡️) then
+    player.dx+=player.acc
+    player.running=true
+    player.flp=false
+  end
+  
+  --slide
+  if player.running
+  and not btn(⬅️)
+  and not btn(➡️)
+  and not player.falling
+  and not player.jumping then
+    player.running=false
+    player.sliding=true
+  end
+  
+  --jump
+  if btnp(❎)
+  and player.landed then
+    player.dy-=player.boost
+    player.landed=false
+  end
+  
+  --vertical collision
+  if player.dy>0 then
+    player.falling=true
+    player.landed=false
+    player.jumping=false
+    
+    player.dy=clamp(player.dy,player.max_dy)
+    
+    if collide_map(player,"down",0) then
+      player.landed=true
+      player.falling=false
+      player.dy=0
+      player.y-=(player.y+player.h)%8
+    end
+  elseif player.dy<0 then
+    player.jumping=true
+    
+    if collide_map(player,"up",1) then
+      player.dy=0
+    end
+  end
+  
+  --horizontal collision
+  if player.dx<0 then
+    player.dx=clamp(player.dx,player.max_dx)
+    
+    if collide_map(player,"left",1) then
+      player.dx=0
+    end
+  elseif player.dx>0 then
+    player.dx=clamp(player.dx,player.max_dx)
+    
+    if collide_map(player,"right",1) then
+      player.dx=0
+    end
+  end
+  
+  --stop slide
+  if player.sliding then
+    if abs(player.dx)<0.2
+    or player.running then
+      player.dx=0
+      player.sliding=false
+    end
+  end
+  
+  --move
+  player.x+=player.dx
+  player.y+=player.dy
+end
+
+function player_animate()
+  if player.jumping then
+    player.sp=5
+  elseif player.falling then
+    player.sp=6
+  elseif player.sliding then
+    player.sp=7
+  elseif player.running then
+    if time()-player.anim>0.15 then
+      player.anim=time()
+      player.sp+=1
+      if player.sp>4 then
+        player.sp=3
+      end
+    end
+  else --idle
+    if time()-player.anim>0.6 then
+      player.anim=time()
+      player.sp+=1
+      if player.sp>2 then
+        player.sp=1
+      end
+    end
+  end
+end
+
+function clamp(num,maximum)
+  return mid(-maximum,num,maximum)
+end
 __gfx__
-00000000005555000055550000555500005555000055550000555500000000000055550000555500005555000055550000000000000000000000000000000000
-0000000005b6bb0005b6bb0005b6bb0005b6bb0005b6bb0005b6bb000055550005c6cc0005c6cc00059699000586880000000000000000000000000000000000
-0070070005bb6b0005bb6b0005bb6b0005bb6b0005bb6b0005bb6b0005b6bb0005cc6c0005cc6c00059969000588680000000000000000000000000000000000
-0007700000555500005555000055550000555500005555005055555005bb6b005055555000555500005555000055550000000000000000000000000000000000
-000770000ddddd000ddddd000dddd0000dddd0000ddddd000ddddd00005555000ddddd005ddddd505ddddd505ddddd5000000000000000000000000000000000
-0070070005ddd50050ddd05050dddd5005ddd50050ddd05000ddd0000ddddd0000ddd00000ddd00000ddd00000ddd00000000000000000000000000000000000
-0000000000d0d00000d0d00000d0d00000dd000000d0d00000d0d00050ddd05000d0d00000d0d00000d0d00000d0d00000000000000000000000000000000000
-00000000005050000050500005005000005500000505000000050500005050000050500000505000050005000500050000000000000000000000000000000000
+00000000005555000055550000555500005555000055550000555500005555000055550000555500005555000055550000000000000000000000000000000000
+0000000005b6bb0005b6bb0005b6bb0005b6bb0005b6bb0005b6bb0005b6bb0005c6cc0005c6cc00059699000586880000000000000000000000000000000000
+0070070005bb6b0005bb6b0005bb6b0005bb6b0005bb6b0005bb6b0005bb6b0005cc6c0005cc6c00059969000588680000000000000000000000000000000000
+00077000005555000055550000555500005555000055550050555550005555005055555000555500005555000055550000000000000000000000000000000000
+000770000ddddd000ddddd000dddd0000dddd0000ddddd000ddddd000ddddd000ddddd005ddddd505ddddd505ddddd5000000000000000000000000000000000
+0070070005ddd50050ddd05050dddd5005ddd50050ddd05000ddd00050ddd05000ddd00000ddd00000ddd00000ddd00000000000000000000000000000000000
+0000000000d0d00000d0d00000d0d00000dd000000d0d00000d0d00000d0d00000d0d00000d0d00000d0d00000d0d00000000000000000000000000000000000
+00000000005050000050500005005000005500000505000000050500000505000050500000505000050005000500050000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
