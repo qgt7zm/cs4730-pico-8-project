@@ -11,3 +11,4 @@ Theme: Only One Room
 ## Sources
 
 - [Nerdy Teachers Platformer Tutorial](https://nerdyteachers.com/Explain/Platformer/)
+- [Nerdy Teachers Platformer Playlist](https://youtube.com/playlist?list=PLyhkEEoUjSQtUiSOu-N4BIrHBFtLNjkyE)
