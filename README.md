@@ -8,7 +8,14 @@ Submission for the PICO-8 Game Jam Quest as part of Fall 2024 CS 4730 – Comput
 
 Theme: Only One Room
 
+## Controls
+- Move: Left/right arrow keys
+- Jump: X
+- Interact: Z
+- Pause Menu: Enter
+
 ## Sources
 
-- [Nerdy Teachers Platformer Tutorial](https://nerdyteachers.com/Explain/Platformer/)
 - [Nerdy Teachers Platformer Playlist](https://youtube.com/playlist?list=PLyhkEEoUjSQtUiSOu-N4BIrHBFtLNjkyE)
+- [Nerdy Teachers Platformer Source Code](https://nerdyteachers.com/Explain/Platformer/)
+- [Waveform Editor Tutorial][https://youtube.com/watch?v=Wj1LJQutMCY]
