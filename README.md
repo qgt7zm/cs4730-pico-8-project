@@ -13,6 +13,7 @@ Theme: Only One Room
 - Jump: X
 - Interact: Z
 - Pause Menu: Enter
+- Retry Level: From the menu
 
 ## Sources
 
