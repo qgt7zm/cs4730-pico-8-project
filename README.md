@@ -11,9 +11,8 @@ Theme: Only One Room
 ## Controls
 - Move: Left/right arrow keys
 - Jump: X
-- Interact: Z
-- Pause Menu: Enter
-- Retry Level: From the menu
+- Interact: Z (+ arrow keys)
+- Pause Menu: Enter (retry the level from here if stuck)
 
 ## Sources
 
