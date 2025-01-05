@@ -1,4 +1,4 @@
-# Antivirus: A PICO-8 Minigame
+# Antivirus (PICO-8 Minigame)
 
 ## Overview
 
@@ -24,6 +24,7 @@ Theme: Only One Room
 
 ## Sources
 
+- [Course Website](https://f24.cs4730.org/schedule.html)
 - [Nerdy Teachers Platformer Playlist](https://youtube.com/playlist?list=PLyhkEEoUjSQtUiSOu-N4BIrHBFtLNjkyE)
 - [Nerdy Teachers Platformer Source Code](https://nerdyteachers.com/Explain/Platformer/)
 - [Waveform Editor Tutorial](https://youtube.com/watch?v=Wj1LJQutMCY)
